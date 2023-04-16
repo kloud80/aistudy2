@@ -67,3 +67,19 @@ EERROR.sum()
 
 설명해낸에러 / TERROR.sum()
 
+
+#추가
+data.dtypes
+data['건축년도'] = data['건축년도'].astype('int')
+
+X = np.array(data[['전용면적(㎡)', '건축년도']].values)
+y = np.array(data['거래금액(만원)'].values)
+
+y = y.reshape([y.shape[0], 1])
+
+
+lm.fit(X, y)
+y_pred = lm.predict(X)
+r2_score(y, y_pred)
+
+
