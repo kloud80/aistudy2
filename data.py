@@ -114,11 +114,33 @@ r2_score(y, y_pred)
 lm.coef_
 
 y2 = X[:,0] * lm.coef_[0,0] + X[:,1] * lm.coef_[0,1] + X[:,3] * lm.coef_[0,3] + lm.intercept_
-y2 = y2.reshape[y2.shape]
+y2 = np.array(y2)
+y2 = y2.reshape([y2.shape[0], 1])
 
-# plt.scatter(data['년식'].values, data['거래금액(만원)'])
+y2 = y - y2
+plt.scatter(data['년식'].values, data['거래금액(만원)'])
 plt.scatter(X[:,2], y2, color='red')
 plt.show()
+
+
+
+plt.scatter(data['전용면적(㎡)'].values, data['년식'].values, data['거래금액(만원)'])
+plt.show()
+
+X = np.array(data[['전용면적(㎡)', '년식',  '년식제곱']].values)
+y = np.array(data['거래금액(만원)'].values)
+
+X.shape
+
+# X = X.reshape([X.shape[0], 1])
+y = y.reshape([y.shape[0], 1])
+
+lm = LinearRegression()
+type(lm)
+
+lm.fit(X, y)
+
+lm.coef_
 
 
 
