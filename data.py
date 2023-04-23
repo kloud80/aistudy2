@@ -83,3 +83,43 @@ y_pred = lm.predict(X)
 r2_score(y, y_pred)
 
 
+
+data['년식'] = 2023- data['건축년도']
+data['년식제곱'] = data['년식'] **2
+
+data[['건축년도', '년식', '년식제곱']]
+
+data = data.reset_index()
+data['index']
+
+
+data[data['년식'] < 20]
+
+
+X = np.array(data[['전용면적(㎡)', '건축년도', '년식', '년식제곱']].values)
+y = np.array(data['거래금액(만원)'].values)
+
+X.shape
+
+# X = X.reshape([X.shape[0], 1])
+y = y.reshape([y.shape[0], 1])
+
+lm = LinearRegression()
+type(lm)
+
+lm.fit(X, y)
+y_pred = lm.predict(X)
+r2_score(y, y_pred)
+
+lm.coef_
+
+y2 = X[:,0] * lm.coef_[0,0] + X[:,1] * lm.coef_[0,1] + X[:,3] * lm.coef_[0,3] + lm.intercept_
+y2 = y2.reshape[y2.shape]
+
+# plt.scatter(data['년식'].values, data['거래금액(만원)'])
+plt.scatter(X[:,2], y2, color='red')
+plt.show()
+
+
+
+
