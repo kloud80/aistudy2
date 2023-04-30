@@ -18,3 +18,11 @@ data.dtypes
 
 data['거래금액(만원)'].describe()
 data['전용면적(㎡)'].describe()
+
+
+
+
+
+import statsmodels.api as sm
+results = sm.OLS(y, sm.add_constant(X)).fit()
+print(results.summary())
