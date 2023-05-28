@@ -36,6 +36,7 @@ if len(X.shape) == 1 :
     X = X.reshape([X.shape[0], 1])
 y = y.reshape([y.shape[0], 1])
 
+import matplotlib.pyplot as plt
 import statsmodels.api as sm
 results = sm.OLS(y, sm.add_constant(X)).fit()
 print(results.summary())
