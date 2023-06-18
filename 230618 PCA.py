@@ -1,4 +1,16 @@
 import geopandas as gpd
+import matplotlib.pyplot as plt
+import pandas as pd
+from glob import glob
+import os
+import numpy as np
 
-data = gpd.read_file('data/grid_ele_2021_11_100.shp', encoding='cp949')
+
+import matplotlib.pyplot as plt
+import sklearn.metrics
+import statsmodels.api as sm
+
+
+
+
 
