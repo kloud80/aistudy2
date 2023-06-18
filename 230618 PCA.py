@@ -29,10 +29,24 @@ gdata[cols[14:-4]] = gdata[cols[14:-4]].astype('float')
 
 
 
-
+print(cols.values)
 
 plt.figure(figsize=(35,25))
 ax = plt.axes()
 ax.axis('off')
-ax = gdata.plot(column='주거인구 추정소득', cmap='Reds', ax = ax, vmin=0, vmax=300)
+ax = gdata.plot(column='직장인구 추정소득', cmap='Reds', ax = ax)
 plt.show()
+
+
+
+cdata = gdata[gdata['20대미만 남성 거주인구수'] > 20].copy()
+
+
+cdata = cdata[['20대미만 남성 거주인구수','60대 여성 거주인구수']].copy()
+
+plt.scatter(y = cdata['20대미만 남성 거주인구수'],  x = cdata['60대 여성 거주인구수'])
+plt.show()
+
+
+
+
