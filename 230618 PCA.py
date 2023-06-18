@@ -27,7 +27,7 @@ gdata = gdata.to_crs('EPSG:5174')
 cols = gdata.columns
 gdata[cols[14:-4]] = gdata[cols[14:-4]].astype('float')
 
-
+gdata.columns.values
 
 print(cols.values)
 
@@ -42,11 +42,53 @@ plt.show()
 cdata = gdata[gdata['20대미만 남성 거주인구수'] > 20].copy()
 
 
-cdata = cdata[['20대미만 남성 거주인구수','60대 여성 거주인구수']].copy()
+cdata = cdata[['20대미만 남성 거주인구수', '20대 남성 거주인구수',
+       '30대 남성 거주인구수', '40대 남성 거주인구수', '50대 남성 거주인구수', '60대 남성 거주인구수',
+       '70대이상 남성 거주인구수', '20대미만 여성 거주인구수', '20대 여성 거주인구수', '30대 여성 거주인구수',
+       '40대 여성 거주인구수', '50대 여성 거주인구수', '60대 여성 거주인구수', '70대이상 여성 거주인구수']].copy()
+
+
 
 plt.scatter(y = cdata['20대미만 남성 거주인구수'],  x = cdata['60대 여성 거주인구수'])
 plt.show()
 
+from sklearn.decomposition import PCA
 
 
 
+X = np.array(cdata.values)
+
+pca = PCA(n_components = 5) # feature 변수 개수가 2개
+pca.fit(X)
+
+
+print(pca.explained_variance_) # 이것은 eigen value를 의미함
+pca.components_
+PCscore = pca.transform(X)
+PCscore[0:5]
+
+pca.components_.shape
+
+# ret = cdata.apply(lambda x : x['20대미만 남성 거주인구수'] * pca.components_[0,0] + x['60대 여성 거주인구수'] * pca.components_[0,1] - pca.noise_variance_, axis=1)
+
+
+PCscore.shape
+
+plt.scatter(y = PCscore[:,0], x= PCscore[:,1])
+plt.show()
+
+print(pca.explained_variance_)
+
+
+new_pca = np.array(PCscore[:,:2])
+
+PCscore.max(axis=0)
+np.where(new_pca == new_pca[:,1].max())
+
+7975
+
+11398
+
+cdata.iloc[7975,:]
+
+cdata.iloc[11398,:]
