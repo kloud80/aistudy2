@@ -159,18 +159,18 @@ cdata = cdata[['20대미만 남성 거주인구수', '20대 남성 거주인구�
        '제1종근린생활시설 면적', '제2종근린생활시설 면적', '업무시설 면적', '문화및집회시설 면적', '숙박시설 면적',
        '종교시설 면적', '위락시설 면적', '판매시설 면적', '공장시설 면적', '운수시설 면적',
        '위험물저장및처리시설 면적', '교육연구시설 면적', '자동차관련시설 면적', '노유자시설 면적', '운동시설 면적',
-       '녹지면적',  '거주인구수'']]
+       '녹지면적',  '거주인구수']].astype('float').fillna(0)
 
 from sklearn.decomposition import PCA
 
-X = np.array(cdata[['거주인구수', '직장인구수']].values)
+X = np.array(cdata.values)
 
-pca = PCA(n_components = 2) # feature 변수 개수가 2개
+pca = PCA(n_components = 10) # feature 변수 개수가 2개
 pca.fit(X)
 
 pca.components_
-print(pca.explained_variance_) # 이것은 eigen value를 의미함
-pca.components_
+# print(pca.explained_variance_) # 이것은 eigen value를 의미함
+# pca.components_
 
 print(pca.explained_variance_ratio_) # 이것은 eigen value를 의미함
 
@@ -184,4 +184,63 @@ PCscore = pca.transform(X)
 PCscore.shape
 
 plt.scatter(y = PCscore[:,0], x= PCscore[:,1])
+plt.show()
+
+
+
+kmeans = KMeans(n_clusters=6)
+kmeans.fit(PCscore[:,:5])
+group = kmeans.labels_
+
+0.48205785 +0.34104909 +0.07763223 +0.03570612 +0.03144912
+
+
+gdata['group'] = pd.DataFrame(data=group)
+
+plt.figure(figsize=(35,25))
+ax = plt.axes()
+ax.axis('off')
+ax = gdata.plot(column='group', cmap='Accent', ax = ax)
+plt.show()
+
+
+"""""===그냥 93개 다==="""
+
+kmeans = KMeans(n_clusters=6)
+kmeans.fit(X)
+group = kmeans.labels_
+
+0.48205785 +0.34104909 +0.07763223 +0.03570612 +0.03144912
+
+
+gdata['group'] = pd.DataFrame(data=group)
+
+plt.figure(figsize=(35,25))
+ax = plt.axes()
+ax.axis('off')
+ax = gdata.plot(column='group', cmap='Accent', ax = ax)
+plt.show()
+
+
+m = X.mean(axis=0)
+m.fill(X.shape[0])
+
+
+
+sdata = cdata.copy()
+sdata = sdata.sort_values('거주인구수', ascending=True)
+sdata = sdata.reset_index()
+
+
+plt.plot(sdata)
+
+sdata = sdata.drop(columns='index')
+
+
+X = np.array(sdata.values)
+
+PCscore = pca.transform(X)
+
+
+plt.plot(PCscore[:, 1])
 plt.show()
